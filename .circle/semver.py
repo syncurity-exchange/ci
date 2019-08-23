@@ -16,7 +16,7 @@
 import sys
 import re
 
-import validate
+# import validate
 
 SEMVER_REGEX = "^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$"
 SINGLE_VERSION_REGEX = "^\d+$"
@@ -36,4 +36,4 @@ def get_semver_string(version):
 if __name__ == '__main__':
 
     pack = validate.load_yaml_file(sys.argv[1])
-    print get_semver_string(pack['version'])
+    print(get_semver_string(pack['version']))
