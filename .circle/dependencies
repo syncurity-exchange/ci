@@ -7,8 +7,8 @@ CURRENT_DIR="$(dirname "$0")"
 export CI_DIR=/home/circleci/ci
 export PYTHONPATH=/tmp/st2/st2common:${PYTHONPATH}
 
-git config --global user.name "StackStorm Exchange"
-git config --global user.email "info@stackstorm.com"
+git config --global user.name "Syncurity"
+git config --global user.email "st2@syncurity.net"
 
 # Print out environment info
 python --version

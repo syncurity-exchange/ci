@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Common variables (environment variables) and functions used by the scripts
 
-EXCHANGE_ORG="${EXCHANGE_ORG:-StackStorm-Exchange}"
-EXCHANGE_PREFIX="${EXCHANGE_PREFIX:-stackstorm}"
+EXCHANGE_ORG="${EXCHANGE_ORG:-syncurity-exchange}"
+EXCHANGE_PREFIX="${EXCHANGE_PREFIX:-}"
 SLEEP_DELAY="${SLEEP_DELAY:-2}"
 
 function get_all_exchange_repo_names() {

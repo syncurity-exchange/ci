@@ -11,8 +11,8 @@ from collections import OrderedDict
 
 from st2common.util.pack import get_pack_ref_from_metadata
 
-EXCHANGE_NAME = "StackStorm-Exchange"
-EXCHANGE_PREFIX = "stackstorm"
+EXCHANGE_NAME = "syncurity-exchange"
+EXCHANGE_PREFIX = ""
 
 
 def build_index(path_glob, output_path):
@@ -40,8 +40,10 @@ def build_index(path_glob, output_path):
 
         print('Processing pack: %s (%s)' % (pack_name, filename))
 
-        pack_meta['repo_url'] = 'https://github.com/%s/%s-%s' % (
-            EXCHANGE_NAME, EXCHANGE_PREFIX, sanitized_pack_name
+        pack_meta['repo_url'] = 'https://github.com/%s/%s' % (
+            EXCHANGE_NAME,
+            # EXCHANGE_PREFIX,
+            sanitized_pack_name
         )
 
         # Note: Key in the index dictionary is ref and not a name
@@ -67,8 +69,9 @@ def build_index(path_glob, output_path):
     print('Processed %s packs.' % (counter))
     print('Index data written to "%s".' % (output_path))
 
+
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate StackStorm exchange index.json')
+    parser = argparse.ArgumentParser(description='Generate syncurity exchange index.json')
     parser.add_argument('--glob', help='Glob which points to the pack metadatafiles',
                         required=True)
     parser.add_argument('--output', help='Directory where the generated index.json file is stored',

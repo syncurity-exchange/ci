@@ -18,8 +18,8 @@ then
 fi
 
 PACK="$1"
-EXCHANGE_ORG="${EXCHANGE_ORG:-StackStorm-Exchange}"
-EXCHANGE_PREFIX="${EXCHANGE_PREFIX:-stackstorm}"
+EXCHANGE_ORG="${EXCHANGE_ORG:-syncurity-exchange}"
+EXCHANGE_PREFIX="${EXCHANGE_PREFIX:-}"
 REPO_NAME="${EXCHANGE_PREFIX}-${PACK}"
 
 # GitHub: create a user-scope token

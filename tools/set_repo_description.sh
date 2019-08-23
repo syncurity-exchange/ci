@@ -29,14 +29,15 @@ for REPO_NAME in ${REPO_NAMES[@]}; do
     echo "Setting description for repo: ${REPO_NAME}"
 
     # Retrieve description from pack.yaml
-    PACK_YAML_URL="https://raw.githubusercontent.com/StackStorm-Exchange/${REPO_NAME}/master/pack.yaml"
+    PACK_YAML_URL="https://raw.githubusercontent.com/syncurity-exchange/${REPO_NAME}/master/pack
+    .yaml"
     PACK_DESCRIPTION=$(curl -sS --fail -X GET "${PACK_YAML_URL}" | python -c 'import yaml,sys; c=yaml.safe_load(sys.stdin);print c["description"]')
 
     if [ -z "${PACK_DESCRIPTION}" ]; then
         echo "Description not available for pack ${REPO_NAME}, skipping..."
     else
         curl -sS --fail -u "${USERNAME}:${PASSWORD}" -X PATCH --header "Content-Type: application/json" \
-        -d '{"name": "'"${REPO_NAME}"'", "description": "'"${PACK_DESCRIPTION}"'", "homepage": "https://exchange.stackstorm.org/"}' \
+        -d '{"name": "'"${REPO_NAME}"'", "description": "'"${PACK_DESCRIPTION}"'", "homepage": "https://exchange.syncurity.net/"}' \
         "https://api.github.com/repos/${EXCHANGE_ORG}/${REPO_NAME}"
 
         sleep ${SLEEP_DELAY}

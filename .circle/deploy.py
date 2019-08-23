@@ -20,7 +20,7 @@ import sys
 
 import requests
 
-EXCHANGE_ORG = 'StackStorm-Exchange'
+EXCHANGE_ORG = 'syncurity-exchange'
 INDEX_REPO = 'index'
 AUTH = (os.environ['MACHINE_USER'], os.environ['MACHINE_PASSWORD'])
 
@@ -53,6 +53,7 @@ def calculate_git_sha(content):
     sha = hashlib.sha1()
     sha.update('blob {}\0{}'.format(len(content), content))
     return sha.hexdigest()
+
 
 if __name__ == '__main__':
     local_path = sys.argv[1]
