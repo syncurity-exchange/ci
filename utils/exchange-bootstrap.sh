@@ -30,8 +30,8 @@ then
 fi
 
 PACK="$1"
-EXCHANGE_ORG="${EXCHANGE_ORG:-StackStorm-Exchange}"
-EXCHANGE_PREFIX="${EXCHANGE_PREFIX:-stackstorm}"
+EXCHANGE_ORG="${EXCHANGE_ORG:-syncurity-exchange}"
+EXCHANGE_PREFIX="${EXCHANGE_PREFIX:-}"
 REPO_ALIAS=${PACK}
 REPO_NAME="${EXCHANGE_PREFIX}-${PACK}"
 REPO_DIR="/tmp/${REPO_NAME}"
@@ -94,11 +94,12 @@ fi
 # - circle.yml
 # - .gitignore
 mkdir .circleci
-curl -sS --fail "https://raw.githubusercontent.com/StackStorm-Exchange/ci/master/.circle/circle.yml.sample" > .circleci/config.yml
+curl -sS --fail "https://raw.githubusercontent.com/syncurity-exchange/ci/master/.circle/circle.yml
+.sample" > .circleci/config.yml
 chmod 755 .circleci/config.yml
 git add .circleci/config.yml
 
-curl -sS --fail "https://raw.githubusercontent.com/StackStorm-Exchange/ci/master/files/.gitignore.sample" > .gitignore
+curl -sS --fail "https://raw.githubusercontent.com/syncurity-exchange/ci/master/files/.gitignore.sample" > .gitignore
 git add .gitignore
 
 git commit -m "Bootstrap a StackStorm Exchange pack repository for pack ${PACK}."
