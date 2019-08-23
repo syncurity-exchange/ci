@@ -16,7 +16,7 @@
 import sys
 import re
 
-# import validate
+import validate
 
 SEMVER_REGEX = "^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$"
 SINGLE_VERSION_REGEX = "^\d+$"
