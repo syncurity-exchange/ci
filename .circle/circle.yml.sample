@@ -110,7 +110,7 @@ jobs:
           # NOTE: We try to retry the script up to 5 times if it fails. The command could fail due
           # to the race (e.g. we try to push changes to index, but index has been updated by some
           # other pack in the mean time)
-          name: Update exchange.stackstorm.org
+          name: Update exchange.syncurity.net
           command: ~/ci/.circle/retry_on_failure.sh ~/ci/.circle/deployment
 
 workflows:
