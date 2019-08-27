@@ -40,10 +40,8 @@ def build_index(path_glob, output_path):
 
         print('Processing pack: %s (%s)' % (pack_name, filename))
 
-        pack_meta['repo_url'] = 'https://github.com/%s/%s' % (
-            EXCHANGE_NAME,
-            EXCHANGE_PREFIX,
-            sanitized_pack_name
+        pack_meta['repo_url'] = 'https://github.com/%s/%s-%s' % (
+            EXCHANGE_NAME, EXCHANGE_PREFIX, sanitized_pack_name
         )
 
         # Note: Key in the index dictionary is ref and not a name
