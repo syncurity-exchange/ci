@@ -21,7 +21,7 @@ from st2common.models.api.pack import PackAPI
 from st2common.util import schema as util_schema
 from st2common.util.pack import get_pack_ref_from_metadata
 
-PREFIX = 'stackstorm'
+PREFIX = 'syncurity'
 PACK_SCHEMA = PackAPI.schema
 
 

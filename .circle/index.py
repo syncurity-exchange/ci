@@ -12,7 +12,7 @@ from collections import OrderedDict
 from st2common.util.pack import get_pack_ref_from_metadata
 
 EXCHANGE_NAME = "syncurity-exchange"
-EXCHANGE_PREFIX = ""
+EXCHANGE_PREFIX = "syncurity"
 
 
 def build_index(path_glob, output_path):
@@ -42,7 +42,7 @@ def build_index(path_glob, output_path):
 
         pack_meta['repo_url'] = 'https://github.com/%s/%s' % (
             EXCHANGE_NAME,
-            # EXCHANGE_PREFIX,
+            EXCHANGE_PREFIX,
             sanitized_pack_name
         )
 

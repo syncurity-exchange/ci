@@ -19,7 +19,7 @@ fi
 
 PACK="$1"
 EXCHANGE_ORG="${EXCHANGE_ORG:-syncurity-exchange}"
-EXCHANGE_PREFIX="${EXCHANGE_PREFIX:-}"
+EXCHANGE_PREFIX="${EXCHANGE_PREFIX:-syncurity}"
 REPO_NAME="${EXCHANGE_PREFIX}-${PACK}"
 
 # GitHub: create a user-scope token
