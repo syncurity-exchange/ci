@@ -87,7 +87,7 @@ def get_pack_resources(pack_dir):
         for file in matching_files:
             with open(file, 'r') as fp:
                 metadata = fp.read()
-            metadata = yaml.safe_load(metadata)
+            metadata = yaml.load(metadata)
             valid = True
             for validator in locator.get('validate', [locator.get('key')]):
                 if validator not in metadata:
