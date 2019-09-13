@@ -23,8 +23,7 @@ fi
 
 # Clean up so the script can be retries in case of failure (e.g. race)
 rm -rf ~/index
-git clone git@github.com:syncurity-exchange/index.git ~/index
-2>/dev/null
+git clone git@github.com:syncurity-exchange/index.git ~/index 2>/dev/null
 
 echo "Processing pack ${PACK_NAME}"
 
