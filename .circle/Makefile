@@ -9,8 +9,8 @@ CHANGED_DIRECTORIES := $(shell $(CI_DIR)/utils/git-changes directories)
 VIRTUALENV_DIR ?= virtualenv
 ST2_REPO_PATH ?= /tmp/st2
 ST2_REPO_BRANCH ?= master
-FORCE_CHECK_ALL_FILES =? false
-FORCE_CHECK_PACK =? false
+FORCE_CHECK_ALL_FILES ?= false
+FORCE_CHECK_PACK ?= false
 
 export ST2_REPO_PATH ROOT_DIR FORCE_CHECK_ALL_FILES FORCE_CHECK_PACK
 
@@ -22,7 +22,7 @@ COMPONENTS_RUNNERS := $(wildcard /tmp/st2/contrib/runners/*)
 all: requirements lint packs-resource-register packs-tests
 
 .PHONY: all-ci
-all-ci: compile .flake8 .pylint .copy-pack-to-subdirectory .configs-check .metadata-check .packs-resource-register .packs-tests
+all-ci: compile .license-check .flake8 .pylint .copy-pack-to-subdirectory .configs-check .metadata-check .packs-resource-register .packs-tests
 
 .PHONY: lint
 lint: requirements flake8 pylint configs-check metadata-check
@@ -68,7 +68,7 @@ compile:
 	@echo "==================== flake8 ===================="
 	@echo
 	. $(VIRTUALENV_DIR)/bin/activate; \
-	if [ "$${FORCE_CHECK_ALL_FILES}" ]; then \
+	if [ "$${FORCE_CHECK_ALL_FILES}" = "true" ]; then \
 		find ./* -name "*.py" | while read py_file; do \
 			flake8 --config=$(CI_DIR)/lint-configs/python/.flake8 $$py_file || exit 1; \
 		done; \
@@ -88,7 +88,7 @@ compile:
 	@echo "==================== pylint ===================="
 	@echo
 	. $(VIRTUALENV_DIR)/bin/activate; \
-	if [ "$${FORCE_CHECK_ALL_FILES}" ] || [ -n "${CHANGED_PY}" ]; then \
+	if [ "$${FORCE_CHECK_ALL_FILES}" = "true" ] || [ -n "${CHANGED_PY}" ]; then \
 		REQUIREMENTS_DIR=$(CI_DIR)/.circle/ \
 		CONFIG_DIR=$(CI_DIR)/lint-configs/ \
 		st2-check-pylint-pack $(ROOT_DIR) || exit 1; \
@@ -142,11 +142,7 @@ compile:
 	@echo "==================== example config check ===================="
 	@echo
 	. $(VIRTUALENV_DIR)/bin/activate; \
-	if [ "$${FORCE_CHECK_ALL_FILES}" = "true" ]; then \
-		find ./* | while read file; do \
-			st2-check-validate-pack-example-config $$file || exit 1; \
-		done; \
-	elif [ -n "${CHANGED_FILES}" ]; then \
+	if [ "$${FORCE_CHECK_ALL_FILES}" = "true" ] || [ -n "${CHANGED_FILES}" ]; then \
 		st2-check-validate-pack-example-config /tmp/packs/$(PACK_NAME) || exit 1; \
 	else \
 		echo "No files have changed, skipping run..."; \
@@ -170,7 +166,7 @@ compile:
 	@echo "==================== packs-resource-register ===================="
 	@echo
 	. $(VIRTUALENV_DIR)/bin/activate; \
-	if [ ! "${CHANGED_FILES}" ]; then \
+	if [ -z "${CHANGED_FILES}" ]; then \
 		echo "No files have changed, skipping run..."; \
 	else \
 		st2-check-register-pack-resources /tmp/packs/$(PACK_NAME) || exit 1; \
@@ -182,7 +178,7 @@ compile:
 	@echo "==================== packs-tests ===================="
 	@echo
 	. $(VIRTUALENV_DIR)/bin/activate; \
-	if [ ! "${CHANGED_FILES}" ]; then \
+	if [ -z "${CHANGED_FILES}" ]; then \
 		echo "No files have changed, skipping run..."; \
 	else \
 		$(ST2_REPO_PATH)/st2common/bin/st2-run-pack-tests -c -t -x -j -p $(ROOT_DIR) || exit 1; \
@@ -193,10 +189,28 @@ compile:
 	@echo
 	@echo "==================== pack-missing-tests ===================="
 	@echo
-	if [ ! "${CHANGED_FILES}" ]; then \
+	if [ -z "${CHANGED_FILES}" ]; then \
 		echo "No files have changed, skipping run..."; \
 	else \
 		st2-check-print-pack-tests-coverage $(ROOT_DIR) || exit 1; \
+	fi;
+
+# Target which veries repo root contains LICENSE file with ASF 2.0 content
+.PHONY: .license-check
+.license-check:
+	@echo
+	@echo "==================== license-check ===================="
+	@echo
+	if [ -z "${CHANGED_FILES}" ] && [ "$${FORCE_CHECK_ALL_FILES}" = "false" ]; then \
+		echo "No files have changed, skipping run..."; \
+	else \
+		if [ ! -f "$(ROOT_DIR)/LICENSE" ]; then \
+			echo "Missing LICENSE file in $(ROOT_DIR)"; \
+			exit 2;\
+		fi;\
+		cat $(ROOT_DIR)/LICENSE | grep -q "Apache License"  || (echo "LICENSE file doesn't contain Apache 2.0 license text" ; exit 2); \
+		cat $(ROOT_DIR)/LICENSE | grep -q "Version 2.0"  || (echo "LICENSE file doesn't contain Apache 2.0 license text" ; exit 2); \
+		cat $(ROOT_DIR)/LICENSE | grep -q "www.apache.org/licenses/LICENSE-2.0"  || (echo "LICENSE file doesn't contain Apache 2.0 license text" ; exit 2); \
 	fi;
 
 .PHONY: .clone_st2_repo
