@@ -22,7 +22,7 @@ COMPONENTS_RUNNERS := $(wildcard /tmp/st2/contrib/runners/*)
 all: requirements lint packs-resource-register packs-tests
 
 .PHONY: all-ci
-all-ci: compile .license-check .flake8 .pylint .copy-pack-to-subdirectory .configs-check .metadata-check .packs-resource-register .packs-tests
+all-ci: compile .flake8 .pylint .copy-pack-to-subdirectory .configs-check .metadata-check .packs-resource-register .packs-tests
 
 .PHONY: lint
 lint: requirements flake8 pylint configs-check metadata-check
