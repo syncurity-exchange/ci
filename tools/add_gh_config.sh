@@ -8,8 +8,9 @@ for PACK_DIR in syncurity-*; do
     PACK_DIR=`realpath ${PACK_DIR}`
 
     cd ${PACK_DIR}
-    cp ~/repos/ci/.circle/circle.yml.sample ${PACK_DIR}/.circleci/config.yml
-    git add .circleci/config.yml
+    mkdir .github
+    cp ~/repos/ci/.github/* ${PACK_DIR}/.github/.
+    git add .github/*
     git commit -m "Update CircleCI config from ci repo."
     git push origin master
     cd ..
